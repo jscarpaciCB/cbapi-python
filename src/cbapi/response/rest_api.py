@@ -329,7 +329,7 @@ class Query(PaginatedQuery):
         self._count_valid = True
         return self._total_results
 
-    def _search(self, start=0, rows=0, perpage=100):
+    def _search(self, start=0, rows=0):
         # iterate over total result set, 100 at a time
 
         if self._raw_query:
@@ -346,9 +346,9 @@ class Query(PaginatedQuery):
         if self._sort_by:
             args['sort'] = self._sort_by
         if rows:
-            args['rows'] = min(rows, perpage)
+            args['rows'] = min(rows, self._iteration_size)
         else:
-            args['rows'] = perpage
+            args['rows'] = self._iteration_size
 
         still_querying = True
         current = start

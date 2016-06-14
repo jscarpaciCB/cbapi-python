@@ -128,6 +128,11 @@ class PaginatedQuery(BaseQuery):
         # TODO: this should be subject to a TTL
         self._total_results = 0
         self._count_valid = False
+        self._iteration_size = 100
+
+    def set_iteration_size(self, iteration_size):
+        self._iteration_size = iteration_size
+        return self
 
     def __len__(self):
         if self._count_valid:

@@ -102,9 +102,9 @@ class Computer(MutableBaseModel):
         return self._join(Computer, "templateComputerId")
 
     def resetCLIPassword(self):
-        self._build_api_request_uri()
+        self._cb.post_object(self._build_api_request_uri() + "?resetCLIPassword=true", body=self._info)
         self.refresh()
-        return getattr(self, "cliPassword")
+        return getattr(self, "CLIPassword")
 
 
 class Connector(MutableBaseModel, CreatableModelMixin):

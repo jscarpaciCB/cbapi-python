@@ -68,6 +68,7 @@ class Query(PaginatedQuery):
 
         self._sort_by = None
         self._group_by = None
+        self._iteration_size = 1000
 
     def where(self, q):
         """Add a filter to this query.
@@ -112,7 +113,7 @@ class Query(PaginatedQuery):
         self._count_valid = True
         return self._total_results
 
-    def _search(self, start=0, rows=0, perpage=1000):
+    def _search(self, start=0, rows=0):
         # iterate over total result set, 1000 at a time
         args = {}
         args['offset'] = start
@@ -121,7 +122,7 @@ class Query(PaginatedQuery):
         if rows:
             args['limit'] = start + rows
         else:
-            args['limit'] = start + perpage
+            args['limit'] = start + self._iteration_size
 
         current = start
         numrows = 0
@@ -148,5 +149,5 @@ class Query(PaginatedQuery):
 
             args['offset'] = current + 1
 
-            if len(result) < perpage:
+            if len(result) < self._iteration_size:
                 break
