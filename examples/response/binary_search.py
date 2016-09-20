@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import sys
+import codecs
 from cbapi.response.models import Binary
 from cbapi.example_helpers import build_cli_parser, get_cb_response_object
 
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def main():
     parser = build_cli_parser()
